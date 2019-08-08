@@ -1,14 +1,13 @@
 
-.navbar {
-    background-color: rgb(113, 148, 139);
-    margin-top: 0px;
+nav.navbar.navbar-expand-lg {
+    background-color: rgb(210, 179, 218);
 }
 
 
 body {
     background: #fafafa;
     color: #333333;
-    margin-top: 5rem;
+    /* margin-top: 5rem; */
 }
   
 h1, h2, h3, h4, h5, h6 {
