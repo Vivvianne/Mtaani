@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from .models import Neighbourhood
+from .forms import NeighbourhoodForm
+from django.views.generic import CreateView
 
 
 posts = [
@@ -23,3 +26,8 @@ def home(request):
          'posts': posts
          }
      return render(request, 'neighbour/home.html', context)
+ 
+ 
+class CreateNeighbourhoodView(CreateView):
+        model = Neighbourhood
+        form_class = NeighbourhoodForm
