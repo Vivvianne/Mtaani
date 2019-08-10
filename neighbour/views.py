@@ -1,5 +1,6 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import Neighbourhood, Post
+from django.contrib import messages
 from .forms import NeighbourhoodForm, BusinessForm, NeighbourhoodUpdateForm, BusinessUpdateForm
 from django.views.generic import CreateView
 
@@ -18,7 +19,17 @@ class CreateNeighbourhoodView(CreateView):
         
         
 def business(request):
-    b_form = BusinessUpdateForm()
+    if request.method == 'POST':
+        
+        b_form = BusinessUpdateForm(instance=request.business)
+        if b_form.is_valid():
+            b_form.save()
+            messages.success(request, f'Your business has been updated!')
+            return redirect('business')
+        
+    else:
+        b_form = BusinessUpdateForm(instance=request.business)
+        
     context = {
         'b_form': b_form
     }
