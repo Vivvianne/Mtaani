@@ -28,7 +28,7 @@ class Post(models.Model):
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE )
-    business_email = models.EmailField() 
+    
     
     
     def __str__(self):
@@ -40,7 +40,7 @@ class Business(models.Model):
     business_email = models.CharField(max_length=30)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE )
-    business_email = models.EmailField()
+    
     
     def __str__(self):
         return self.business_name
