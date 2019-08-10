@@ -37,4 +37,4 @@ def business(request):
         
         
 def about(request):
-    return render(request, 'blog/about.html', {'title': 'About'})
+    return render(request, 'neighbour/about.html', {'title': 'About'})
