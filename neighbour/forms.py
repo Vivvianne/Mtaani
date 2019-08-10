@@ -7,4 +7,4 @@ from django.contrib.auth.models import User
 class NeighbourhoodForm(forms.ModelForm):
     class Meta:
         model = Neighbourhood
-        fields = ['name']
+        fields = ['name', 'location']
