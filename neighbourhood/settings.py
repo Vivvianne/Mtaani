@@ -36,16 +36,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'neighbour.apps.NeighbourConfig',
-    'users.apps.UsersConfig',
-    'crispy_forms',
-    'bootstrap3',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'neighbour',
+    'users',
+    'crispy_forms',
+    'bootstrap3',
 ]
 
 MIDDLEWARE = [

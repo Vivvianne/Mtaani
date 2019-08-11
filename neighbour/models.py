@@ -31,7 +31,7 @@ class Post(models.Model):
     content = models.TextField()
     date_posted = models.DateTimeField(default=timezone.now)
     author = models.ForeignKey(User, on_delete=models.CASCADE)
-    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE )
+    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, null=True,)
     
     
     
@@ -45,7 +45,7 @@ class Business(models.Model):
     business_name = models.CharField(max_length=100)
     business_email = models.CharField(max_length=30)
     user = models.ForeignKey(User, on_delete=models.CASCADE)
-    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE )
+    neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, null=True )
     
     
     def __str__(self):
