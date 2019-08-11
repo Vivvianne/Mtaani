@@ -37,13 +37,18 @@ def post_save(request):
     if request.method =='POST':
         form = PostCreateForm(request.POST, request.FILES)
         if form.is_valid():
-            image = form.save(commit=False)
-            image.author = request.user
+            post = form.save(commit=False)
+            post.author = request.user
             
-            image.save()
+            post.save()
             return redirect('neighbour-home')
     else:
         form = PostCreateForm()
+        
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.neighbourhood_id = self.request.neighbourhood
+        return super().form_valid(form)
     return render(request,'neighbour/post_form.html',{'form':form})
     
     
@@ -75,6 +80,7 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 class CreateNeighbourhoodView(CreateView):
         model = Neighbourhood
         form_class = NeighbourhoodForm
+        success_url = 'neighbour/success.html'
         context_object_name = 'neighbourhood'
         template_name = 'neighbour/neighbourhood.html'
         
