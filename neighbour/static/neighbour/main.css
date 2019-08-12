@@ -85,3 +85,17 @@ a.article-title:hover {
 .account-heading {
     font-size: 2.5rem;
 }
+
+@media screen and (min-width: 300px) {
+    body {
+      background-color: white;
+      color:blue;
+    }
+  }
+  @media screen and (max-width: 560px) {
+      .article-metadata {
+          font-size: 1.5rem;
+          line-height: 1.5;
+          image-rendering: pixelated;
+      }
+  }
