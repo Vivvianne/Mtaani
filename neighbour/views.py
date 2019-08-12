@@ -1,8 +1,9 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Neighbourhood, Post
+from .models import Neighbourhood, Post, Business
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
-from .forms import NeighbourhoodForm, BusinessForm, PostCreateForm, NeighbourhoodUpdateForm, BusinessUpdateForm
+from django.contrib.auth.models import User
+from .forms import NeighbourhoodForm, BusinessForm, PostCreateForm, NeighbourhoodUpdateForm,  BusinessUpdateForm
 from django.views.generic import CreateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
@@ -80,13 +81,14 @@ class PostDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     
 class UserPostListView(ListView):
     model = Post
-    template_name = 'upload/user_posts.html'
+    template_name = 'neighbour/user_posts.html'
     context_object_name = 'posts'
     paginate_by = 3
     
     def get_queryset(self):
         user = get_object_or_404(User, username=self.kwargs.get('username'))
         return Post.objects.filter(author=user).order_by('-date_posted')
+    
 
 class CreateNeighbourhoodView(CreateView):
         model = Neighbourhood
@@ -94,6 +96,25 @@ class CreateNeighbourhoodView(CreateView):
         success_url = 'neighbour/success.html'
         context_object_name = 'neighbourhood'
         template_name = 'neighbour/neighbourhood.html'
+        
+        
+def business_save(request):
+    if request.method =='POST':
+        form = BusinessForm(request.POST, request.FILES)
+        if form.is_valid():
+            business = form.save(commit=False)
+            business.author = request.user
+            
+            business.save()
+            return redirect('business')
+    else:
+        form = BusinessForm()
+        
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        form.instance.neighbourhood_id = self.request.neighbourhood
+        return super().form_valid(form)
+    return render(request,'neighbour/business_form.html',{'form':form})
         
         
 def business(request):
