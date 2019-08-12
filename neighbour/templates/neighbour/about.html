@@ -1,9 +1,21 @@
-{% extends "neighbour/base.html" %}
+{% load static %}
+{% load bootstrap3 %}
 {% block content %}
+    <header>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+        <link rel="stylesheet" type="text/css" href="{% static 'neighbour/main.css' %}">
+    </header>
     <body>
-        <div class= "container">
-            <h1>Karibu Mtaani</h1>
-            <img src="media/neighbors_meeting.jpg" alt="">
+        <div class = "welcome" style="text-align:center">
+            <div class= "jumbotron" style="background-color:rgb(210, 179, 218);">
+                <h1 style="font-weight: bold;">Karibu Mtaani</h1>
+                <h3>Be in the know of what happens in your community</h3>
+                <img src="media/neighbors_meeting.jpg" alt="">
+                <button><a class="nav-item nav-link" href="{% url 'login' %}">Login</a></button>
+                <button><a class="nav-item nav-link" href="{% url 'register' %}">Register</a></button>
+            </div>
         </div>
     </body>
 {% endblock content %}

@@ -17,6 +17,10 @@ h1, h2, h3, h4, h5, h6 {
 ul {
     margin: 0;
 }
+.jumbotron {
+    background-color: rgb(210, 179, 218);
+    text-align: center;
+}
   
   
 .site-header .navbar-nav .nav-link {
