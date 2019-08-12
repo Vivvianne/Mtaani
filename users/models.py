@@ -1,14 +1,15 @@
 from django.db import models
-from django.contrib.auth.models import User
+from django.contrib.auth.models import AbstractUser
 from PIL import Image
-from neighbour.models import Neighbourhood
+import django.conf as settings;
 
 
+class CustomUser(AbstractUser):
+    neighbourhood = models.ForeignKey('neighbour.Neighbourhood', on_delete=models.CASCADE, null=True,)
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
-    # neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, null=True,)
     email = models.CharField(max_length=30)
     
     
@@ -24,4 +25,7 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+            
         
+
+    
