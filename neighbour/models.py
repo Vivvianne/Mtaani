@@ -33,6 +33,11 @@ class Business(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     neighbourhood = models.ForeignKey(Neighbourhood, on_delete=models.CASCADE, null=True )
     
+    @classmethod
+    def search_by_business_name(cls,search_term):
+        business = cls.objects.filter(business_name__icontains=search_term)
+        return business
+    
     def __str__(self):
         return self.business_name
     

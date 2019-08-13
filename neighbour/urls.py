@@ -20,6 +20,7 @@ urlpatterns = [
     path('neighbourhood/new/', views.business, name='neighbourhood-form'),
     path('neighbourhood/<neighbourhood>', views.neighbourhood, name='neighbourhood'),
     path('emergency/', views.emergency , name= 'emergency'),
+    path('search/', views.search_results, name='search_results')
     
     
 ]
