@@ -1,14 +1,24 @@
 from django.db import models
 from django.contrib.auth.models import User
 from PIL import Image
+from django.urls import reverse
 
 
+class Neighbourhood(models.Model):
+    name = models.CharField(max_length=50)
+    
+    def __str__(self):
+         return self.name
+     
+    def get_absolute_url(self):
+        return reverse('neighbourhood', kwargs={'pk':self.pk})
+    
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
     image = models.ImageField(default='default.jpg', upload_to='profile_pics')
     email = models.CharField(max_length=30)
-    
+    neighbourhood = models.ForeignKey(Neighbourhood, on_delete = models.CASCADE, null=True)
     
     def __str__(self):
         return f'{self.user.username} Profile'

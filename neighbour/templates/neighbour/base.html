@@ -52,9 +52,13 @@
         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search For Businesses</button>
       </form>
       <div class="navbar-nav">
+        {% if user.profile.neighbourhood %}
+          <a class="nav-item nav-link" href="{% url 'neighbourhood' user.profile.neighbourhood.name %}">{{user.profile.neighbourhood}}</a>
+          <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
+        {% endif %}
+
         {% if user.is_authenticated %}
-        <a class="nav-item nav-link" href="{% url 'post-create' %}">New Post</a>
-          <a class="nav-item nav-link" href="{% url 'profile' %}">Profile</a>
+          <a class="nav-item nav-link" href="{% url 'profile' user.username %}">Profile</a>
           <a class="nav-item nav-link" href="{% url 'logout' %}">Logout</a>
         {% else %}
           <a class="nav-item nav-link" href="{% url 'login' %}">Login</a>

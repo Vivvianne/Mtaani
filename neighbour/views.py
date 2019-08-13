@@ -3,7 +3,8 @@ from .models import Neighbourhood, Post, Business
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib import messages
 from django.contrib.auth.models import User
-from .forms import NeighbourhoodForm, BusinessForm, PostCreateForm, NeighbourhoodUpdateForm,  BusinessUpdateForm
+from .forms import BusinessForm, PostCreateForm,  BusinessUpdateForm
+# from .forms import NeighbourhoodForm, BusinessForm, PostCreateForm, NeighbourhoodUpdateForm,  BusinessUpdateForm
 from django.views.generic import CreateView, ListView, DetailView, CreateView, UpdateView, DeleteView
 
 
@@ -14,7 +15,7 @@ def home(request):
          }
      return render(request, 'neighbour/home.html', context)
  
-def neighbourhood(request):
+def neighbourhood(request, neighbourhood):
     context = {
          'neighbourhood': Neighbourhood.objects.all()
          }
@@ -91,12 +92,12 @@ class UserPostListView(ListView):
         return Post.objects.filter(author=user).order_by('-date_posted')
     
 
-class CreateNeighbourhoodView(CreateView):
-        model = Neighbourhood
-        form_class = NeighbourhoodForm
-        success_url = 'neighbour/success.html'
-        context_object_name = 'neighbourhood'
-        template_name = 'neighbour/neighbourhood.html'
+# class CreateNeighbourhoodView(CreateView):
+#         model = Neighbourhood
+#         form_class = NeighbourhoodForm
+#         success_url = 'neighbour/success.html'
+#         context_object_name = 'neighbourhood'
+#         template_name = 'neighbour/neighbourhood.html'
         
         
 def business_save(request):
@@ -104,36 +105,63 @@ def business_save(request):
         form = BusinessForm(request.POST, request.FILES)
         if form.is_valid():
             business = form.save(commit=False)
-            business.author = request.user
+            business.user = request.user
             
             business.save()
             return redirect('business')
     else:
         form = BusinessForm()
         
-    def form_valid(self, form):
-        form.instance.author = self.request.user
-        form.instance.neighbourhood_id = self.request.neighbourhood
-        return super().form_valid(form)
+    # def form_valid(self, form):
+    #     form.instance.author = self.request.user
+    #     form.instance.neighbourhood_id = self.request.neighbourhood
+    #     return super().form_valid(form)
     return render(request,'neighbour/business_form.html',{'form':form})
         
         
 def business(request):
     if request.method == 'POST':
         
-        b_form = BusinessUpdateForm(instance=request.business)
+        b_form = BusinessUpdateForm()
         if b_form.is_valid():
             b_form.save()
             messages.success(request, f'Your business has been updated!')
             return redirect('business')
         
     else:
-        b_form = BusinessUpdateForm(instance=request.business)
+        b_form = BusinessUpdateForm()
         
     context = {
         'b_form': b_form
     }
     return render(request, 'neighbour/business.html', context)
+
+class BusinessUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+    model = Post
+    fields = ['business_name', 'business_email']
+
+    def form_valid(self, form):
+        form.instance.author = self.request.user
+        return super().form_valid(form)
+
+    def test_func(self):
+        post = self.get_object()
+        if self.request.user == business.bisiness_name:
+            return True
+        return False
+    
+    
+    
+class BusinessListView(ListView):
+    model = Business
+    template_name = 'neighbour/business.html'  
+    context_object_name = 'businesses'
+    ordering = ['-date_posted']
+    paginate_by = 4
+    
+    
+class BusinessDetailView(DetailView):
+    model = Business
         
         
 def about(request):

@@ -5,18 +5,19 @@ from .models import Neighbourhood
 from .models import Business
 from django.contrib.auth.models import User
 from .models import Post
+from users.models import Neighbourhood
 
 
 
-class NeighbourhoodForm(forms.ModelForm):
-    class Meta:
-        model = Neighbourhood
-        fields = ['name', 'location', 'population']
+# class NeighbourhoodForm(forms.ModelForm):
+#     class Meta:
+#         model = Neighbourhood
+#         fields = ['name', 'location', 'population']
         
-class NeighbourhoodUpdateForm(forms.ModelForm):
-    class Meta:
-        model = Neighbourhood
-        fields = ['name', 'location','population']
+# class NeighbourhoodUpdateForm(forms.ModelForm):
+#     class Meta:
+#         model = Neighbourhood
+#         fields = ['name', 'location','population']
         
         
         

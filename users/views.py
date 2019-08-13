@@ -4,7 +4,7 @@ from .forms import UserRegisterForm
 from django.contrib.auth.decorators import login_required
 from .forms import UserRegisterForm, UserUpdateForm, ProfileUpdateForm
 from .models import Profile
-
+from django.contrib.auth.models import User
 
 def register(request):
     if request.method == 'POST':
@@ -19,11 +19,15 @@ def register(request):
     return render(request, 'users/register.html', {'form': form})
 
 @login_required
-def profile(request):
-    try:
-        profile = request.user.profile
-    except Profile.DoesNotExist:
-        profile = Profile(user=request.user)
+def profile(request, username):
+    # try:
+    id = User.objects.get(username=username).pk
+    user  = User.objects.filter(username=username)
+    profile = Profile.objects.filter(user = id)
+    
+    print(profile)
+    # except Profile.DoesNotExist:
+    #     profile = User.objects.filter(username = username)
     if request.method == 'POST': 
         u_form = UserUpdateForm(request.POST, instance=request.user)
         p_form = ProfileUpdateForm(request.POST,
@@ -39,10 +43,11 @@ def profile(request):
         u_form = UserUpdateForm(instance=request.user)
         p_form = ProfileUpdateForm(instance=request.user.profile)
         
-    print(dir(request))
+    # print(dir(request))
     context = {
         'u_form': u_form,
-        'p_form': p_form
+        'p_form': p_form,
+        'profile':profile
     }
     
     
