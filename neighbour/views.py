@@ -156,13 +156,18 @@ class BusinessListView(ListView):
     model = Business
     template_name = 'neighbour/business.html'  
     context_object_name = 'businesses'
-    ordering = ['-date_posted']
+    # ordering = ['-date_posted']
     paginate_by = 4
+    
     
     
 class BusinessDetailView(DetailView):
     model = Business
+    template_name ='neighbourhood/business_detail.html'
         
         
 def about(request):
     return render(request, 'neighbour/about.html', {'title': 'About'})
+
+def emergency(request):
+    return render(request, 'neighbour/emergency.html', {'title': 'Emergency'})

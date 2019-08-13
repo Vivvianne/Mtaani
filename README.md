@@ -28,7 +28,7 @@ This application allows one to be in the loop about everything happening in one'
 | Click on search | Search for your prefered business | See the business |
 | Click on create business | fill in the form | Your business will be created |
 | Click on see business | NA | See the businesses in the neighbourhood |
-| Click on Profile | Click on update profile and update it | Profile will be updated |
+| Click on Profile | Click on update profile and update it and chhose neighbourhood| Profile will be updated |
 
 
 ## Live Link
