@@ -33,7 +33,7 @@ This application allows one to be in the loop about everything happening in one'
 
 ## Live Link
 
-One can view the live site here
+One can view the live site here https://mtaanikwetu.herokuapp.com/
 
 
 ## Requirements
